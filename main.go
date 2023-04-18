@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"time"
 
 	. "github.com/blacked/go-zabbix"
 	"github.com/spf13/cast"
@@ -61,8 +62,12 @@ func main() {
 	flag.StringVar(&arg, "f", "/path/to/your/directory", "Enter your arg")
 	flag.Parse()
 
-	run := DirSize(arg)
-	fmt.Printf("%s%s", run, " GB\n")
-	fmt.Println(arg)
-	zabbixSend(run, arg)
+	i := 0
+	for i <= 2 {
+		run := DirSize(arg)
+		fmt.Printf("%s%s", run, " GB\n")
+		fmt.Println(arg)
+		zabbixSend(run, arg)
+		time.Sleep(1 * time.Hour)
+	}
 }
